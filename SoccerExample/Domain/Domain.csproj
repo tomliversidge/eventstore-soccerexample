@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{164A4336-C519-48F1-BA2A-AC893561E7D6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Domain</RootNamespace>
+    <AssemblyName>Domain</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\BlowFullTimeWhistle.cs" />
+    <Compile Include="Commands\KickOff.cs" />
+    <Compile Include="Commands\ScheduleGame.cs" />
+    <Compile Include="Commands\ScoreGoal.cs" />
+    <Compile Include="Commands\ShowPlayerRedCard.cs" />
+    <Compile Include="Commands\ShowPlayerYellowCard.cs" />
+    <Compile Include="Commands\SubstitutePlayer.cs" />
+    <Compile Include="Events\FullTime.cs" />
+    <Compile Include="Events\GameScheduled.cs" />
+    <Compile Include="Events\GoalScored.cs" />
+    <Compile Include="Events\KickedOff.cs" />
+    <Compile Include="Events\PlayerRedCarded.cs" />
+    <Compile Include="Events\PlayerSubstituted.cs" />
+    <Compile Include="Events\PlayerYellowCarded.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="GameCommandHandler.cs" />
+    <Compile Include="Infrastructure\AggregateDeletedException.cs" />
+    <Compile Include="Infrastructure\AggregateNotFoundException.cs" />
+    <Compile Include="Infrastructure\AggregateRoot.cs" />
+    <Compile Include="Infrastructure\AggregateVersionException.cs" />
+    <Compile Include="Infrastructure\Command.cs" />
+    <Compile Include="Infrastructure\ConcurrencyException.cs" />
+    <Compile Include="Infrastructure\Event.cs" />
+    <Compile Include="Infrastructure\ICommand.cs" />
+    <Compile Include="Infrastructure\IContainer.cs" />
+    <Compile Include="Infrastructure\IEvent.cs" />
+    <Compile Include="Infrastructure\IHandle.cs" />
+    <Compile Include="Infrastructure\IMessage.cs" />
+    <Compile Include="Infrastructure\IRepository.cs" />
+    <Compile Include="Infrastructure\MessageDispatcher.cs" />
+    <Compile Include="Infrastructure\ReflectionCode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubstitutionReason.cs" />
+    <Compile Include="Team.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
