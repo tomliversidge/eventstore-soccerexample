@@ -64,6 +64,7 @@ namespace Persistence
                         EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName
                     }
                 };
+            eventHeaders.Add("Test", "Testing");
             var metadata = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventHeaders, SerializerSettings));
             var typeName = evnt.GetType().Name;
 
