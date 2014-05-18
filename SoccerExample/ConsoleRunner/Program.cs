@@ -14,6 +14,22 @@ namespace ConsoleRunner
 {
     class Program
     {
+        private static void Log<T>(T message, Action<T> next) where T : IMessage
+        {
+            Console.WriteLine(message.ToString());
+            next(message);
+        }
+
+        private static void RegisterWithLogging<T>(Action<T> callback) where T : IMessage
+        {
+            MessageDispatcher.Register<T>(x => Log(x, callback));
+        }
+
+        private static IRepository<Game> createGameRepository(IEventStoreConnection connection)
+        {
+            return new EventStoreRepository<Game>(connection);
+        } 
+
         static void Main(string[] args)
         {
             IPEndPoint ipEndPoint = new IPEndPoint(IPAddress.Loopback, 1113);
@@ -22,16 +38,15 @@ namespace ConsoleRunner
             connection.Connect();
 
             var gameRepository = new EventStoreRepository<Game>(connection);
-
-            // this could be done using a container
-            var gameCommandHandler = new GameCommandHandler(gameRepository);
-            MessageDispatcher.Register<ScheduleGame>(gameCommandHandler.Handle);
-            MessageDispatcher.Register<KickOff>(gameCommandHandler.Handle);
-            MessageDispatcher.Register<ScoreGoal>(gameCommandHandler.Handle);
-            MessageDispatcher.Register<BlowFullTimeWhistle>(gameCommandHandler.Handle);
-            MessageDispatcher.Register<SubstitutePlayer>(gameCommandHandler.Handle);
-            MessageDispatcher.Register<ShowPlayerYellowCard>(gameCommandHandler.Handle);
-            MessageDispatcher.Register<ShowPlayerRedCard>(gameCommandHandler.Handle);
+            Func<IRepository<Game>> createGameRepository = () => new EventStoreRepository<Game>(connection);
+            MessageDispatcher.Register<ScheduleGame>(x => Log(x, y => GameCommandHandler.Handle(gameRepository, x)));
+            RegisterWithLogging<KickOff>(x => GameCommandHandler.Handle(gameRepository, x));
+            MessageDispatcher.Register<ScoreGoal>(x => GameCommandHandler.Handle(gameRepository, x));
+            MessageDispatcher.Register<BlowFullTimeWhistle>(x => GameCommandHandler.BlowFullTimeWhistle(gameRepository, x));
+            MessageDispatcher.Register<SubstitutePlayer>(x => GameCommandHandler.SubstitutePlayer(gameRepository, x));
+            MessageDispatcher.Register<ShowPlayerYellowCard>(x => GameCommandHandler.ShowPlayerYellowCard(gameRepository, x));
+            // transient lifestyle 
+            MessageDispatcher.Register<ShowPlayerRedCard>(x => GameCommandHandler.ShowPlayerRedCard(createGameRepository(), x));
 
             Console.WriteLine("Press any key to start");
             Console.ReadKey(); 

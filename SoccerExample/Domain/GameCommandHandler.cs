@@ -5,68 +5,54 @@ using Domain.Infrastructure;
 
 namespace Domain
 {
-    public class GameCommandHandler : 
-        IHandle<ScheduleGame>, 
-        IHandle<KickOff>, 
-        IHandle<ScoreGoal>,
-        IHandle<BlowFullTimeWhistle>,
-        IHandle<SubstitutePlayer>,
-        IHandle<ShowPlayerYellowCard>,
-        IHandle<ShowPlayerRedCard>
+    public static class GameCommandHandler
     {
-        private readonly IRepository<Game> _gameRepository;
-
-        public GameCommandHandler(IRepository<Game> gameRepository)
+        public static void Handle(IRepository<Game> gameRepository, ScheduleGame command)
         {
-            _gameRepository = gameRepository;
+            var game = new Game(command.GameId, command.HomeTeam, command.AwayTeam, command.KickOffTime);
+            gameRepository.Save(game);
         }
 
-        public void Handle(ScheduleGame args)
+        public static void Handle(IRepository<Game> gameRepository, KickOff command)
         {
-            var game = new Game(args.GameId, args.HomeTeam, args.AwayTeam, args.KickOffTime);
-            _gameRepository.Save(game);
+            var game = gameRepository.GetById(command.GameId);
+            game.KickOff(command.Time);
+            gameRepository.Save(game);
         }
 
-        public void Handle(KickOff args)
+        public static void Handle(IRepository<Game> gameRepository, ScoreGoal command)
         {
-            var game = _gameRepository.GetById(args.GameId);
-            game.KickOff(args.Time);
-            _gameRepository.Save(game);
+            var game = gameRepository.GetById(command.GameId);
+            game.ScoreGoal(command.Team, command.Player, command.Time);
+            gameRepository.Save(game);
         }
 
-        public void Handle(ScoreGoal args)
+        public static void BlowFullTimeWhistle(IRepository<Game> gameRepository, BlowFullTimeWhistle command)
         {
-            var game = _gameRepository.GetById(args.GameId);
-            game.ScoreGoal(args.Team, args.Player, args.Time);
-            _gameRepository.Save(game);
-        }
-        
-        public void Handle(BlowFullTimeWhistle args)
-        {
-            var game = _gameRepository.GetById(args.GameId);
-            game.FullTime(args.Time);
-            _gameRepository.Save(game);
+            var game = gameRepository.GetById(command.GameId);
+            game.FullTime(command.Time);
+            gameRepository.Save(game);
         }
 
-        public void Handle(SubstitutePlayer args)
+        public static void SubstitutePlayer(IRepository<Game> gameRepository, SubstitutePlayer command)
         {
-            var game = _gameRepository.GetById(args.GameId);
-            game.SubstitutePlayer(args.Team, args.PlayerToBringOn, args.PlayerToSubstitute, args.Reason, args.Time);
-            _gameRepository.Save(game);
+            var game = gameRepository.GetById(command.GameId);
+            game.SubstitutePlayer(command.Team, command.PlayerToBringOn, command.PlayerToSubstitute, command.Reason, command.Time);
+            gameRepository.Save(game);
         }
 
-        public void Handle(ShowPlayerYellowCard args)
+        public static void ShowPlayerYellowCard(IRepository<Game> gameRepository, ShowPlayerYellowCard command)
         {
-            var game = _gameRepository.GetById(args.GameId);
-            game.ShowPlayerYellowCard(args.Team, args.PlayerName, args.Time);
-            _gameRepository.Save(game);
+            var game = gameRepository.GetById(command.GameId);
+            game.ShowPlayerYellowCard(command.Team, command.PlayerName, command.Time);
+            gameRepository.Save(game);
         }
 
-        public void Handle(ShowPlayerRedCard args)
+        public static void ShowPlayerRedCard(IRepository<Game> gameRepository, ShowPlayerRedCard command)
         {
-            var game = _gameRepository.GetById(args.GameId);
-            game.ShowPlayerRedCard(args.Team, args.PlayerName, args.Time);
-            _gameRepository.Save(game);
+            var game = gameRepository.GetById(command.GameId);
+            game.ShowPlayerRedCard(command.Team, command.PlayerName, command.Time);
+            gameRepository.Save(game);
         }
     }
 }
