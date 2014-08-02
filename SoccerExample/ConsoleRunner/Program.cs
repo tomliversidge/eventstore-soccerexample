@@ -6,9 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Domain;
 using Domain.Commands;
-using Domain.Infrastructure;
 using EventStore.ClientAPI;
-using Persistence;
+using TomKernel;
 
 namespace ConsoleRunner
 {

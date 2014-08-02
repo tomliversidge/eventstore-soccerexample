@@ -1,7 +1,7 @@
 ﻿using System;
 using Domain.Commands;
 using Domain.Events;
-using Domain.Infrastructure;
+using TomKernel;
 
 namespace Domain
 {

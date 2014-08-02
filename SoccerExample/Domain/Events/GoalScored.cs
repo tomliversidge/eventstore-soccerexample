@@ -1,5 +1,5 @@
 ﻿using System;
-using Domain.Infrastructure;
+using TomKernel;
 
 namespace Domain.Events
 {

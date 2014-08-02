@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
-using Domain.Infrastructure;
 using EventStore.ClientAPI;
-using EventStore.ClientAPI.Messages;
 using EventStore.ClientAPI.SystemData;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
