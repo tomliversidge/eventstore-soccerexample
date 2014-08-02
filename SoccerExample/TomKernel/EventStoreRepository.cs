@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using EventStore.ClientAPI;
-using EventStore.ClientAPI.Common.Utils;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using TomKernel.Exceptions;
 
-namespace Persistence
+namespace TomKernel
 {
     public class EventStoreRepository<T> : IRepository<T> where T : AggregateRoot
     {
@@ -58,12 +57,12 @@ namespace Persistence
             var data = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(evnt, SerializerSettings));
 
             var eventHeaders = new Dictionary<string, object>(headers)
+            {
                 {
-                    {
-                        EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName
-                    }
-                };
-            eventHeaders.Add("Test", "Testing");
+                    EventClrTypeHeader, evnt.GetType().AssemblyQualifiedName
+                },
+                {"Test", "Testing"}
+            };
             var metadata = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(eventHeaders, SerializerSettings));
             var typeName = evnt.GetType().Name;
 

@@ -55,24 +55,15 @@
     <Compile Include="Events\PlayerYellowCarded.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameCommandHandler.cs" />
-    <Compile Include="Infrastructure\AggregateDeletedException.cs" />
-    <Compile Include="Infrastructure\AggregateNotFoundException.cs" />
-    <Compile Include="Infrastructure\AggregateRoot.cs" />
-    <Compile Include="Infrastructure\AggregateVersionException.cs" />
-    <Compile Include="Infrastructure\Command.cs" />
-    <Compile Include="Infrastructure\ConcurrencyException.cs" />
-    <Compile Include="Infrastructure\Event.cs" />
-    <Compile Include="Infrastructure\ICommand.cs" />
-    <Compile Include="Infrastructure\IContainer.cs" />
-    <Compile Include="Infrastructure\IEvent.cs" />
-    <Compile Include="Infrastructure\IHandle.cs" />
-    <Compile Include="Infrastructure\IMessage.cs" />
-    <Compile Include="Infrastructure\IRepository.cs" />
-    <Compile Include="Infrastructure\MessageDispatcher.cs" />
-    <Compile Include="Infrastructure\ReflectionCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubstitutionReason.cs" />
     <Compile Include="Team.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TomKernel\TomKernel.csproj">
+      <Project>{25675ad1-4117-49ea-b37f-879a017bcdb6}</Project>
+      <Name>TomKernel</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
